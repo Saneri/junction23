@@ -1,0 +1,13 @@
+.upload-zone {
+  padding: 1em;
+  min-width: 10em;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background-color: #1a1a1a;
+  transition: border-color 0.25s;
+  cursor: pointer;
+}
+
+.upload-zone:hover {
+  border-color: #646cff;
+}
