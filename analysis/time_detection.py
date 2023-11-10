@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 
+
 def main(video_path, threshold=30.0):
     # Open the video
     cap = cv2.VideoCapture(video_path)
@@ -46,5 +47,5 @@ def main(video_path, threshold=30.0):
         cap.release()
 
 if __name__ == "__main__":
-    video_file_path = 'path_to_your_video.mp4'  # Replace with your video file path
+    video_file_path = 'video1.mp4'  # Replace with your video file path
     main(video_file_path)
