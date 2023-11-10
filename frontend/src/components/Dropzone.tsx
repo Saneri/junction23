@@ -3,8 +3,8 @@ import { useDropzone } from "react-dropzone";
 import "./Dropzone.css";
 
 const Dropzone = () => {
-  const onDrop = useCallback((acceptedFiles: unknown) => {
-    console.log(acceptedFiles);
+  const onDrop = useCallback((acceptedFile: File[]) => {
+    console.log(`submit ${acceptedFile[0].name} for analyzing`);
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
