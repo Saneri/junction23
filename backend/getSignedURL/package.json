@@ -1,0 +1,10 @@
+{
+  "name": "s3-uploader",
+  "version": "1.0.0",
+  "description": "Lambda function that gives signed URLs so that videos and other big files can be uploaded",
+  "main": "app.js",
+  "author": "Saneri",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.449.0"
+  }
+}
