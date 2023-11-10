@@ -1,0 +1,38 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: junction23 backend
+
+Globals:
+  Function:
+    Timeout: 3
+    MemorySize: 128
+
+Resources:
+  MyApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowMethods:
+          - GET
+          - POST
+          - DELETE
+          - OPTIONS
+        AllowHeaders:
+          - "*"
+        AllowOrigins:
+          - "*"
+
+  UploadRequestFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: analyze/
+      Handler: app.lambda_handler
+      Runtime: python3.11
+      Architectures:
+        - x86_64
+      Events:
+        Analyze:
+          Type: Api
+          Properties:
+            Path: /analyze
+            Method: get
