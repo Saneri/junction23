@@ -1,13 +1,18 @@
-import { getPresignedUrl } from "./services/uploads";
+import { getPresignedUrl, uploadToS3 } from "./services/uploads";
 
 export const uploadFileToS3 = async (file: File): Promise<boolean> => {
   const format = getFileExtension(file.name);
   if (!format) {
+    console.error("could not read file format");
     return false;
   }
 
   const presignedUrl = await getPresignedUrl(format);
-  console.log(presignedUrl);
+  if (!presignedUrl) {
+    console.error("got not fetch presigner url");
+    return false;
+  }
+  uploadToS3(presignedUrl.uploadUrl, file);
   return true;
 };
 
