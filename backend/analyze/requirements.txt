@@ -1,4 +1,4 @@
 opencv-python
 pydub
 python-dotenv
-openai=0.28.0
+openai==0.28.0

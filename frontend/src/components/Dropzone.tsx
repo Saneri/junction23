@@ -2,10 +2,18 @@ import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import "./Dropzone.css";
 
-const Dropzone = () => {
-  const onDrop = useCallback((acceptedFile: File[]) => {
-    console.log(`submit ${acceptedFile[0].name} for analyzing`);
-  }, []);
+type DropzoneProps = {
+  handleFileSubmit: (file: File) => void;
+};
+
+const Dropzone = (props: DropzoneProps) => {
+  const { handleFileSubmit } = props;
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      handleFileSubmit(acceptedFiles[0]);
+    },
+    [handleFileSubmit]
+  );
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
