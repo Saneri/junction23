@@ -116,3 +116,5 @@ def lambda_handler(event, context):
     }
 
 
+if __name__ == '__main__':
+     extract_audio_from_mp4('../../video1.mp4', "audio.mp3")
