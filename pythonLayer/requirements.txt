@@ -2,3 +2,6 @@ opencv-python
 pydub
 python-dotenv
 openai==0.28.0
+requests
+requests-toolbelt
+numpy
