@@ -4,8 +4,8 @@ Description: junction23 backend
 
 Globals:
   Function:
-    Timeout: 3
-    MemorySize: 128
+    Timeout: 29
+    MemorySize: 2048
 
 Resources:
   Api:
@@ -22,12 +22,12 @@ Resources:
         AllowOrigins:
           - "*"
 
-  AnalyzerFunction:
+  InvokeAnalyzeFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: analyze/
-      Handler: app.lambda_handler
-      Runtime: python3.11
+      CodeUri: invokeAnalyze/
+      Handler: app.handler
+      Runtime: nodejs18.x
       Architectures:
         - x86_64
       Events:
@@ -37,8 +37,21 @@ Resources:
             Path: /analyze
             Method: get
             ApiId: !Ref Api
+      Policies:
+        - LambdaInvokePolicy:
+            FunctionName: !Ref AnalyzerFunction
+
+  AnalyzerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: junction23-backend-AnalyzerFunction
+      CodeUri: analyze/
+      Handler: app.lambda_handler
+      Runtime: python3.11
+      Architectures:
+        - x86_64
       Layers:
-        - arn:aws:lambda:eu-west-1:368093168477:layer:junction23-ffmpeg-layer:1
+        - arn:aws:lambda:eu-west-1:368093168477:layer:junction23-ffmpeg-layer:4
         - arn:aws:lambda:eu-west-1:368093168477:layer:junction23-opencv-layer:5
 
   S3UploadBucket:
