@@ -53,6 +53,19 @@ Resources:
       Layers:
         - arn:aws:lambda:eu-west-1:368093168477:layer:junction23-ffmpeg-layer:4
         - arn:aws:lambda:eu-west-1:368093168477:layer:junction23-opencv-layer:5
+      Policies:
+        - S3WritePolicy:
+            BucketName: !Ref S3ResultBucket
+        - Statement:
+            - Effect: Allow
+              Resource: !Sub "arn:aws:s3:::${S3ResultBucket}/"
+              Action:
+                - s3:putObjectAcl
+
+  S3ResultBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: junction23-storage-results
 
   S3UploadBucket:
     Type: AWS::S3::Bucket

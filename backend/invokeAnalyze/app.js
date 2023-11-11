@@ -1,4 +1,5 @@
 const { LambdaClient, InvokeCommand } = require("@aws-sdk/client-lambda");
+const { randomUUID } = require("node:crypto");
 
 const lambdaClient = new LambdaClient({ region: "eu-west-1" });
 
@@ -12,24 +13,23 @@ exports.handler = async (event) => {
   }
 
   const targetFunctionName = "junction23-backend-AnalyzerFunction";
+  const id = randomUUID();
 
   const params = {
     FunctionName: targetFunctionName,
     InvocationType: "Event", // For asynchronous execution
-    Payload: Buffer.from(JSON.stringify({ url: url, id: "?" })),
+    Payload: Buffer.from(JSON.stringify({ url, id })),
   };
 
   try {
     const command = new InvokeCommand(params);
-    const response = await lambdaClient.send(command);
-
-    // generate id somewhere here
+    await lambdaClient.send(command);
 
     return {
       statusCode: 202,
       body: JSON.stringify({
         message: "Invocation started",
-        id: "?",
+        id,
       }),
     };
   } catch (error) {
