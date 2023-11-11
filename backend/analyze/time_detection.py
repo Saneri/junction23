@@ -34,7 +34,7 @@ def delete_files_in_folder(folder):
         os.remove(file_path)
 
 
-def main(video_path, threshold=30.0, min_slide_duration=1.0, output_folder='output_frames'):
+def detect_changes(video_path, threshold=30.0, min_slide_duration=1.0, output_folder='output_frames'):
     cap = cv2.VideoCapture(video_path)
 
     # Delete the files in the output folder if it exists
@@ -99,4 +99,4 @@ if __name__ == "__main__":
     output_folder = args.output_folder
 
     logging.basicConfig(level=logging.INFO)
-    main(video_file_path, threshold=threshold_value, min_slide_duration=min_duration, output_folder=output_folder)
+    detect_changes(video_file_path, threshold=threshold_value, min_slide_duration=min_duration, output_folder=output_folder)
