@@ -37,6 +37,9 @@ Resources:
             Path: /analyze
             Method: get
             ApiId: !Ref Api
+      Layers:
+        - arn:aws:lambda:eu-west-1:368093168477:layer:junction23-ffmpeg-layer:1
+        - arn:aws:lambda:eu-west-1:368093168477:layer:junction23-opencv-layer:5
 
   S3UploadBucket:
     Type: AWS::S3::Bucket
@@ -79,16 +82,3 @@ Resources:
             Path: /uploads
             Method: get
             ApiId: !Ref Api
-
-  # TempConversionDepLayer:
-  #   Type: AWS::Serverless::LayerVersion
-  #   Properties:
-  #     LayerName: junction23-ffmpeg-layer
-  #     Description: ffmpeg dependencies for junction23 python lambda
-  #     ContentUri:
-  #       Bucket: junction23-ffmpeg
-  #       Key: test
-  #     CompatibleRuntimes:
-  #       - python3.11
-  #     LicenseInfo: GPLv3
-  #     RetentionPolicy: Retain
