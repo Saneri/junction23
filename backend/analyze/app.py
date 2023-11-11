@@ -4,6 +4,7 @@ import io
 import os
 import requests
 from requests_toolbelt.multipart.encoder import MultipartEncoder
+import numpy as np
 
 API_TOKEN = os.getenv('API_TOKEN')
 
@@ -33,13 +34,14 @@ def extract_audio_from_mp4(mp4_file_url, output_audio_path):
         
     # Load video from url
     video = requests.get(mp4_file_url)
-
+    idx = np.random.randint(10000)
+    video_file = 'video_temp' + str(idx) + '.mp4'
     # Save to video_temp.mp4
-    with open('video_temp.mp4', 'wb') as f:
+    with open(video_file, 'wb') as f:
         f.write(video.content)
 
     # Load the mp4 file
-    video = AudioSegment.from_file('video_temp.mp4', "mp4")
+    video = AudioSegment.from_file(video_file, "mp4")
 
     # Export the audio
     video.export(output_audio_path, format="mp3")
