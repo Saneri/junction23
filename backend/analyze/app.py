@@ -29,21 +29,29 @@ def transcribe_audio(audio_file):
     return response.json().get('text', '')
     
 
-def extract_audio_from_mp4(mp4_file_path, output_audio_path):
-        # Load the mp4 file
-        video = AudioSegment.from_file(mp4_file_path, "mp4")
+def extract_audio_from_mp4(mp4_file_url, output_audio_path):
+        
+    # Load video from url
+    video = requests.get(mp4_file_url)
 
-        # Export the audio
-        video.export(output_audio_path, format="mp3")
+    # Save to video_temp.mp4
+    with open('video_temp.mp4', 'wb') as f:
+        f.write(video.content)
 
-def lambda_handler(event, context):
+    # Load the mp4 file
+    video = AudioSegment.from_file('video_temp.mp4', "mp4")
 
-    video_path = event['queryStringParameters']['url']
+    # Export the audio
+    video.export(output_audio_path, format="mp3")
+
+
+def lambda_handler(event, context=None):
+
+    video_url = event['queryStringParameters']['url']
+
     file = io.BytesIO()
-    extract_audio_from_mp4(video_path, file)
+    extract_audio_from_mp4(video_url, file)
     transcript = transcribe_audio(file)
-    # feedback = gpt4_vision(video_to_frames(video_path),transcript)
-
 
     return {
         "statusCode": 200,
