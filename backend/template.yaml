@@ -79,3 +79,16 @@ Resources:
             Path: /uploads
             Method: get
             ApiId: !Ref Api
+
+  # TempConversionDepLayer:
+  #   Type: AWS::Serverless::LayerVersion
+  #   Properties:
+  #     LayerName: junction23-ffmpeg-layer
+  #     Description: ffmpeg dependencies for junction23 python lambda
+  #     ContentUri:
+  #       Bucket: junction23-ffmpeg
+  #       Key: test
+  #     CompatibleRuntimes:
+  #       - python3.11
+  #     LicenseInfo: GPLv3
+  #     RetentionPolicy: Retain
