@@ -30,7 +30,14 @@ exports.handler = async (event) => {
       };
     }
 
-    const fileContent = data.Body.transformToString();
+    const stream = data.Body;
+    const chunks = [];
+
+    for await (const chunk of stream) {
+      chunks.push(chunk);
+    }
+
+    const fileContent = Buffer.concat(chunks).toString("utf-8");
 
     return JSON.stringify({
       text: fileContent,
