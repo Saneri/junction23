@@ -15,18 +15,26 @@ exports.handler = async (event) => {
 
   const params = {
     Bucket: RESULT_BUCKET,
-    Key: id,
+    Key: `${id}.txt`,
   };
 
   const getCommand = new GetObjectCommand(params);
 
   try {
-    const test = await s3Client.send(getCommand);
-    console.error(test);
+    const data = await s3Client.send(getCommand);
 
-    return {
-      statusCode: 200,
-    };
+    if (!data.Body) {
+      return {
+        statusCode: 404,
+        error,
+      };
+    }
+
+    const fileContent = data.Body.transformToString();
+
+    return JSON.stringify({
+      text: fileContent,
+    });
   } catch (error) {
     console.error(error);
     return {

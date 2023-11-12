@@ -13,12 +13,12 @@ exports.handler = async (event) => {
   }
 
   const targetFunctionName = "junction23-backend-AnalyzerFunction";
-  const id = randomUUID();
+  const result_id = randomUUID();
 
   const params = {
     FunctionName: targetFunctionName,
     InvocationType: "Event", // For asynchronous execution
-    Payload: Buffer.from(JSON.stringify({ url, id })),
+    Payload: Buffer.from(JSON.stringify({ url: url, id: result_id })),
   };
 
   try {
@@ -29,7 +29,7 @@ exports.handler = async (event) => {
       statusCode: 202,
       body: JSON.stringify({
         message: "Invocation started",
-        id,
+        id: result_id,
       }),
     };
   } catch (error) {

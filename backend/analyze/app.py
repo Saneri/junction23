@@ -97,18 +97,18 @@ def transcribe_audio(audio_file):
 #     # Export the audio
 #     video.export(output_audio_path, format="mp3")
 
-def upload_to_S3(text, id):
+def upload_to_S3(text, video_id):
     encoded_string = text.encode("utf-8")
     print(encoded_string)
 
     bucket_name = RESULTS_BUCKET
     
-    s3_path = id + ".txt"
+    s3_path = video_id + ".txt"
 
     s3 = boto3.resource("s3")
     print("s3 created")
     s3.Bucket(bucket_name).put_object(Key=s3_path, Body=encoded_string)
-    print("Putted to bucket")
+    print("Put to bucket")
 
 def lambda_handler(event, context=None):
     payload = event
@@ -116,6 +116,7 @@ def lambda_handler(event, context=None):
 
     video_url = payload.get("url")
     video_id = payload.get("id")
+    print(video_id)
    
     res = requests.get(video_url)
     print("video_url received")

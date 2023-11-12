@@ -1,5 +1,5 @@
 export const loadingTexts = [
-  "Sending the video to god knows where...",
-  "Crunching numbers!",
-  "This is test for Pate",
+  "Labelling video frames manually...",
+  "Transcribing audio by hand...",
+  "Googling how to give constructive feedback...",
 ];

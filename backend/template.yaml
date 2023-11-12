@@ -17,6 +17,7 @@ Resources:
           - POST
           - DELETE
           - OPTIONS
+          - HEAD
         AllowHeaders:
           - "*"
         AllowOrigins:
@@ -61,6 +62,7 @@ Resources:
               Resource: !Sub "arn:aws:s3:::${S3ResultBucket}/"
               Action:
                 - s3:putObjectAcl
+                - s3:GetObject
 
   AnalyzeVideoFunction:
     Type: AWS::Serverless::Function
