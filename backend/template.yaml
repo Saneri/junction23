@@ -67,6 +67,31 @@ Resources:
     Properties:
       BucketName: junction23-storage-results
 
+  ResultFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: junction23-backend-ResultFunction
+      CodeUri: result/
+      Handler: app.handler
+      Runtime: nodejs18.x
+      Architectures:
+        - x86_64
+      Events:
+        Analyze:
+          Type: HttpApi
+          Properties:
+            Path: /result
+            Method: get
+            ApiId: !Ref Api
+      Policies:
+        - S3ReadPolicy:
+            BucketName: !Ref S3ResultBucket
+        - Statement:
+            - Effect: Allow
+              Resource: !Sub "arn:aws:s3:::${S3ResultBucket}/"
+              Action:
+                - s3:GetObject
+
   S3UploadBucket:
     Type: AWS::S3::Bucket
     Properties:

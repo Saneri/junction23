@@ -8,16 +8,13 @@ const URL_EXPIRATION_SECONDS = 5 * 60;
 
 // expects file format as a query paramter. example: example.com/uploads?format=mp4
 exports.handler = async (event) => {
-  if (
-    !event?.queryStringParameters?.format ||
-    event.queryStringParameters.format.length > 4
-  ) {
+  const format = event?.queryStringParameters?.format;
+  if (!format || format.length > 4) {
     return {
       statusCode: 400,
       body: JSON.stringify({ error: "query parameter invalid: format" }),
     };
   }
-  const format = event.queryStringParameters.format;
   return await getUploadURL(format);
 };
 
