@@ -62,6 +62,24 @@ Resources:
               Action:
                 - s3:putObjectAcl
 
+  AnalyzeVideoFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: junction23-backend-AnalyzeVideoFunction
+      CodeUri: analyzeVideo/
+      Handler: app.lambda_handler
+      Runtime: python3.11
+      Architectures:
+        - x86_64
+      Policies:
+        - S3WritePolicy:
+            BucketName: !Ref S3ResultBucket
+        - Statement:
+            - Effect: Allow
+              Resource: !Sub "arn:aws:s3:::${S3ResultBucket}/"
+              Action:
+                - s3:putObjectAcl
+
   S3ResultBucket:
     Type: AWS::S3::Bucket
     Properties:
