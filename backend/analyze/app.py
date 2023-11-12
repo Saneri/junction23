@@ -28,6 +28,7 @@ def gpt4_vision(frames, transcript):
     s += "\n- Give feedback on the presentations narrative and arguments."
     s += "\n- Give out-of-the-box ideas to improve the pitch."
     s += "\n- Point out spelling mistakes and give a grade from 1-10 based on how likely the challenge would be to win a hackathon."
+    s += "\n- Give the feedback using the markdown format."
     s += f"\n\nTRANSCRIPT:\n{transcript}"
 
     PROMPT = [
