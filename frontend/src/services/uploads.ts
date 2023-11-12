@@ -39,8 +39,7 @@ export const getResult = async (id: string): Promise<string | null> => {
     const res = await apiGatewayInstance.get("/result", {
       params: { id },
     });
-    console.log("result: ", res.data);
-    return res.data;
+    return res.data.text;
   } catch (error) {
     console.error(error);
     return null;

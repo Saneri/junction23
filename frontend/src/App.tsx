@@ -10,6 +10,7 @@ function App() {
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingText, setLoadingText] = useState<string[]>([]);
   const [resultText, setResultText] = useState<string | null>(null);
+  const [resultPage, setResultPage] = useState<boolean>(false);
 
   const handleFileSubmit = async (file: File) => {
     setLoadingText(loadingTexts);
@@ -25,35 +26,38 @@ function App() {
       return;
     }
 
-    let text = null;
-    while (text == null) {
-      text = await getResult(analysisPayload.id);
+    while (resultText == null) {
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+      const text = await getResult(analysisPayload.id);
 
       if (text) {
         setLoading(false);
         setResultText(text);
-        break;
+        setResultPage(true);
       }
-
-      await new Promise((resolve) => setTimeout(resolve, 5000));
     }
   };
-  if (resultText) {
+  if (resultPage) {
     return (
       <>
-        <h4>result</h4>
+        <h1>Pitchbot</h1>
         <div>{resultText}</div>
       </>
     );
   }
 
   if (loading) {
-    return <LoadingScreen texts={loadingText} />;
+    return (
+      <>
+        <h1>Pitchbot</h1>
+        <LoadingScreen texts={loadingText} />
+      </>
+    );
   }
 
   return (
     <>
-      <h1>Pitch feedback</h1>
+      <h1>Pitchbot</h1>
       <Dropzone handleFileSubmit={handleFileSubmit} />
     </>
   );

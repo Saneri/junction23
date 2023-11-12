@@ -10,21 +10,32 @@ const Dropzone = (props: DropzoneProps) => {
   const { handleFileSubmit } = props;
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
-      handleFileSubmit(acceptedFiles[0]);
+      if (acceptedFiles[0]) {
+        handleFileSubmit(acceptedFiles[0]);
+      }
     },
     [handleFileSubmit]
   );
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps, isDragActive, fileRejections } =
+    useDropzone({
+      onDrop,
+      accept: { "video/mp4": [".mp4"] },
+    });
 
   return (
-    <div {...getRootProps()}>
-      <input {...getInputProps()} />
-      <p className="upload-zone">
-        {isDragActive
-          ? "Drop the files here..."
-          : "Drag 'n' drop some files here, or click to select files"}
-      </p>
-    </div>
+    <>
+      <div {...getRootProps()}>
+        <input {...getInputProps()} />
+        <p className="upload-zone">
+          {isDragActive
+            ? "Drop the files here..."
+            : "Drag 'n' drop .mp4 file here, or click to select a file"}
+        </p>
+      </div>
+      {!!fileRejections.length && (
+        <div>invalid file type given: {fileRejections[0].file.name}</div>
+      )}
+    </>
   );
 };
 
